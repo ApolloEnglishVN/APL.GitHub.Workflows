@@ -33,5 +33,5 @@ jobs:
         owner: ApolloEnglishVN
         repo: APL.ATS.Portal.Api
         github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
-        workflow_file_name: ats_portalapi_deploy_QC_cicd.yml
+        workflow_file_name: ats_portal_api_deploy_QC_cicd.yml
         ref: master
