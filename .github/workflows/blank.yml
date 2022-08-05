@@ -17,5 +17,5 @@ jobs:
       with:
         owner: ApolloEnglishVN
         repo: APL.ATS.Portal.Api
-        github_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+        github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow_file_name: ats_portalapi_deploy_DEV_cicd.yml
