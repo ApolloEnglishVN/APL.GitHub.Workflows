@@ -10,7 +10,9 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  Deploy_DEV:
+    name: "Deploy / DEV"
+    environment: DEVELOPMENT
     runs-on: ubuntu-latest
     steps:
     - uses: convictional/trigger-workflow-and-wait@v1.6.1
@@ -19,4 +21,17 @@ jobs:
         repo: APL.ATS.Portal.Api
         github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow_file_name: ats_portalapi_deploy_DEV_cicd.yml
+        ref: master
+        
+  Deploy_QC:
+    name: "Deploy / QC"
+    environment: QC
+    runs-on: ubuntu-latest
+    steps:
+    - uses: convictional/trigger-workflow-and-wait@v1.6.1
+      with:
+        owner: ApolloEnglishVN
+        repo: APL.ATS.Portal.Api
+        github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
+        workflow_file_name: ats_portalapi_deploy_QC_cicd.yml
         ref: master
