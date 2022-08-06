@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       run-id: ${{ steps.build_deploy_DEV.outputs.run-id }}
+      run_number: ${{ steps.build_deploy_DEV.outputs.run_number2 }}
     steps:
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
@@ -45,6 +46,6 @@ jobs:
         fail-on-error: true
         payload: |
           {
-            "run_number": "${{ needs.Deploy_DEV.outputs.run-id }}"
+            "run_number": "${{ needs.Deploy_DEV.outputs.run_number }}"
           }
         
