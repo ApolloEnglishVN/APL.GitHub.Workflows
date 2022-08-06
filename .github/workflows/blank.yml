@@ -21,7 +21,7 @@ jobs:
         repo: APL.ATS.Portal.Api
         github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow_file_name: ats_portalapi_deploy_DEV_cicd.yml
-        ref: master
+        ref: 'feature/workflow_triggered_from_other_repo'
         
   Deploy_QC:
     name: "Deploy / QC"
