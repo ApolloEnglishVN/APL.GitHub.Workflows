@@ -17,12 +17,12 @@ jobs:
     steps:
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
-      uses: convictional/trigger-workflow-and-wait@v1.6.1
+      uses: mathze/workflow-dispatch-action@v1.1.0
       with:
         owner: ApolloEnglishVN
         repo: APL.ATS.Portal.Api
-        github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
-        workflow_file_name: ats_portalapi_deploy_DEV_cicd.yml
+        token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
+        workflow-name: ats_portalapi_deploy_DEV_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
         
   Deploy_QC:
@@ -31,12 +31,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: Deploy_DEV
     steps:
-    - run: echo ${{ needs.Deploy_DEV.steps.build_deploy_DEV.outputs.run_number }}
-    - run: echo ${{ needs.Deploy_DEV.steps.build_deploy_DEV.outputs.run_number2 }}
-    - uses: convictional/trigger-workflow-and-wait@v1.6.1
+    - run: echo ${{ needs.Deploy_DEV.steps.build_deploy_DEV.outputs.run-id }}
+    - uses: mathze/workflow-dispatch-action@v1.1.0
       with:
         owner: ApolloEnglishVN
         repo: APL.ATS.Portal.Api
-        github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
-        workflow_file_name: ats_portal_api_deploy_QC_cicd.yml
+        token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
+        workflow-name: ats_portal_api_deploy_QC_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
+        payload: |
+          {
+            "run-number": "${{ needs.Deploy_DEV.steps.build_deploy_DEV.outputs.run-id }}"
+          }
+        
