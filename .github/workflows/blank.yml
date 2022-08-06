@@ -30,6 +30,7 @@ jobs:
     needs: Deploy_DEV
     steps:
     - run: echo ${{ needs.Deploy_DEV.outputs.run_number }}
+    - run: echo ${{ needs.Deploy_DEV.outputs.run_number2 }}
     - uses: convictional/trigger-workflow-and-wait@v1.6.1
       with:
         owner: ApolloEnglishVN
