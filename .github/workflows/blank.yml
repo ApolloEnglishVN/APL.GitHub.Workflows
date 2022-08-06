@@ -14,6 +14,8 @@ jobs:
     name: "Deploy / DEV"
     environment: DEVELOPMENT
     runs-on: ubuntu-latest
+    outputs:
+      run-id: ${{ steps.build_deploy_DEV.outputs.run-id }}
     steps:
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
@@ -32,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Deploy_DEV
     steps:
-    - run: echo ${{ Deploy_DEV.steps.build_deploy_DEV.outputs.run-id }}
+    - run: echo ${{ needs.Deploy_DEV.outputs.run-id }}
     - uses: mathze/workflow-dispatch-action@v1.1.0
       with:
         owner: ApolloEnglishVN
@@ -43,6 +45,6 @@ jobs:
         fail-on-error: true
         payload: |
           {
-            "run-number": "${{ Deploy_DEV.steps.build_deploy_DEV.outputs.run-id }}"
+            "run-number": "${{ needs.Deploy_DEV.outputs.run-id }}"
           }
         
