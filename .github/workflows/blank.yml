@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
-      uses: mathze/workflow-dispatch-action@v1.1.0
+      uses: convictional/trigger-workflow-and-wait@v1.6.1
       with:
         owner: ApolloEnglishVN
         repo: APL.ATS.Portal.Api
