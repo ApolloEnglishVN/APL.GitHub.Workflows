@@ -24,6 +24,7 @@ jobs:
         token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow-name: ats_portalapi_deploy_DEV_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
+        fail-on-error: true
         
   Deploy_QC:
     name: "Deploy / QC"
@@ -39,6 +40,7 @@ jobs:
         token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow-name: ats_portal_api_deploy_QC_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
+        fail-on-error: true
         payload: |
           {
             "run-number": "${{ Deploy_DEV.steps.build_deploy_DEV.outputs.run-id }}"
