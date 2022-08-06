@@ -45,6 +45,6 @@ jobs:
         fail-on-error: true
         payload: |
           {
-            "run-number": "${{ needs.Deploy_DEV.outputs.run-id }}"
+            "run_number": "${{ needs.Deploy_DEV.outputs.run-id }}"
           }
         
