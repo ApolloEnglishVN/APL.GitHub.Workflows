@@ -15,7 +15,9 @@ jobs:
     environment: DEVELOPMENT
     runs-on: ubuntu-latest
     steps:
-    - uses: convictional/trigger-workflow-and-wait@v1.6.1
+    - name: "Build & Deploy / DEV"
+      id: build_deploy_DEV
+      uses: mathze/workflow-dispatch-action@v1.1.0
       with:
         owner: ApolloEnglishVN
         repo: APL.ATS.Portal.Api
@@ -29,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: Deploy_DEV
     steps:
-    - run: echo ${{ needs.Deploy_DEV.outputs.run_number }}
-    - run: echo ${{ needs.Deploy_DEV.outputs.run_number2 }}
+    - run: echo ${{ needs.Deploy_DEV.steps.build_deploy_DEV.outputs.run_number }}
+    - run: echo ${{ needs.Deploy_DEV.steps.build_deploy_DEV.outputs.run_number2 }}
     - uses: convictional/trigger-workflow-and-wait@v1.6.1
       with:
         owner: ApolloEnglishVN
