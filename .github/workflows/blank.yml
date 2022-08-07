@@ -27,6 +27,8 @@ jobs:
         workflow-name: ats_portalapi_deploy_DEV_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
         fail-on-error: true
+        run-id: dummy
+        
     - name: Query run from build_deploy_DEV
       id: query_run
       uses: fjogeleit/http-request-action@v1
@@ -53,6 +55,7 @@ jobs:
         workflow-name: ats_portal_api_deploy_QC_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
         fail-on-error: true
+        run-id: dummy
         payload: |
           {
             "run_number": "${{ needs.Deploy_DEV.outputs.run_number }}"
