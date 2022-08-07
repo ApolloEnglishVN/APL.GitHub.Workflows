@@ -37,7 +37,7 @@ jobs:
         repo: APL.ATS.Portal.Api
         token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow-name: ats_portalapi_deploy_DEV_cicd.yml
-        ref: steps.condval.outputs.value
+        ref: ${{ steps.condval.outputs.value }}
         fail-on-error: true
         run-id: dummy
         
@@ -65,7 +65,7 @@ jobs:
         repo: APL.ATS.Portal.Api
         token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow-name: ats_portal_api_deploy_QC_cicd.yml
-        ref: needs.Deploy_DEV.steps.condval.outputs.value
+        ref: ${{ needs.Deploy_DEV.steps.condval.outputs.value }}
         fail-on-error: true
         run-id: dummy
         payload: |
