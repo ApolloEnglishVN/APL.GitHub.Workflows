@@ -36,7 +36,7 @@ jobs:
         customHeaders: |
           {
             "accept": "application/vnd.github+json",
-            "Authorization": ${{ format('token {0}', secrets.GITHUB_TOKEN) }}
+            "Authorization": "${{ format('token {0}', secrets.GITHUB_TOKEN) }}"
           }
     - name: Query run number from query_run
       id: query_run_number
