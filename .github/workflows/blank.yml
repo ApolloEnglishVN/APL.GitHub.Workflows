@@ -15,7 +15,7 @@ jobs:
     environment: DEVELOPMENT
     runs-on: ubuntu-latest
     outputs:
-      run_number: ${{ fromJson(steps.query_run_number.outputs.response).run_number }}
+      run_number: ${{ fromJson(steps.query_run.outputs.response).run_number }}
     steps:
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
@@ -38,13 +38,7 @@ jobs:
             "accept": "application/vnd.github+json",
             "Authorization": "${{ format('token {0}', secrets.G_PERSONAL_ACCESS_TOKEN) }}"
           }
-    - name: Query run number from query_run
-      id: query_run_number
-      run: |
-        echo ${{ steps.query_run.outputs.response }}
-        
-     
-        
+
   Deploy_QC:
     name: "Deploy / QC"
     environment: QC
