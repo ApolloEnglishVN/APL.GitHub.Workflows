@@ -6,6 +6,11 @@ name: 'ATS Portal Api'
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      branch:
+        type: string
+        required: false
+        description: 'Branch/tag (master will be used if empty' 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -17,6 +22,12 @@ jobs:
     outputs:
       run_number: ${{ fromJson(steps.query_run.outputs.response).run_number }}
     steps:
+    - uses: haya14busa/action-cond@v1
+      id: condval
+      with:
+        cond: ${{ github.event.inputs.branch == '' }}
+        if_true: ${{ github.event.inputs.branch = 'master' }}
+        
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
       uses: mathze/workflow-dispatch-action@v1.1.0
@@ -25,7 +36,7 @@ jobs:
         repo: APL.ATS.Portal.Api
         token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow-name: ats_portalapi_deploy_DEV_cicd.yml
-        ref: 'feature/workflow_triggered_from_other_repo'
+        ref: ${{ github.event.inputs.branch }}
         fail-on-error: true
         run-id: dummy
         
@@ -53,7 +64,7 @@ jobs:
         repo: APL.ATS.Portal.Api
         token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow-name: ats_portal_api_deploy_QC_cicd.yml
-        ref: 'feature/workflow_triggered_from_other_repo'
+        ref: ${{ github.event.inputs.branch }}
         fail-on-error: true
         run-id: dummy
         payload: |
