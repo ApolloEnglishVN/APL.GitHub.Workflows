@@ -35,9 +35,9 @@ jobs:
         method: 'GET'
         customHeaders: |
           {
-            "accept": "application/vnd.github+json"
+            "accept": "application/vnd.github+json",
+            "Authorization": ${{ format('token {0}', secrets.GITHUB_TOKEN) }}
           }
-        bearerToken: ${{ secrets.GITHUB_TOKEN }}
     - name: Query run number from query_run
       id: query_run_number
       run: |
