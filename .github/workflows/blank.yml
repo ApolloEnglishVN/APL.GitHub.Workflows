@@ -15,7 +15,7 @@ jobs:
     environment: DEVELOPMENT
     runs-on: ubuntu-latest
     outputs:
-      run_number: ${{ steps.query_run_number.outputs.build-number }}
+      run_number: ${{ fromJson(steps.query_run_number.outputs.response).run_number }}
     steps:
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
@@ -27,12 +27,23 @@ jobs:
         workflow-name: ats_portalapi_deploy_DEV_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
         fail-on-error: true
-    - name: Query run number of build_deploy_DEV
-      id: query_run_number
-      uses: mlilback/build-number@v1
+    - name: Query run from build_deploy_DEV
+      id: query_run
+      uses: fjogeleit/http-request-action@v1
       with:
-        base: 100
-        run-id: steps.build_deploy_DEV.outputs.run-id
+        url: ${{ format('https://api.github.com/repos/{0}/{1}/actions/runs/{2}', "ApolloEnglishVN", "APL.ATS.Portal.Api", ${{ steps.build_deploy_DEV.outputs.run-id }} ) }}
+        method: 'GET'
+        customHeaders: |
+          {
+            "accept": "application/vnd.github+json"
+          }
+        bearerToken: ${{ secrets.GITHUB_TOKEN }}
+    - name: Query run number from query_run
+      id: query_run_number
+      run: |
+        echo ${{ steps.query_run.outputs.response }}
+        
+     
         
   Deploy_QC:
     name: "Deploy / QC"
