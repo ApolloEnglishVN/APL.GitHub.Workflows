@@ -31,7 +31,7 @@ jobs:
       id: query_run
       uses: fjogeleit/http-request-action@v1
       with:
-        url: ${{ format('https://api.github.com/repos/{0}/{1}/actions/runs/{2}', 'ApolloEnglishVN', 'APL.ATS.Portal.Api', ${{ steps.build_deploy_DEV.outputs.run-id }}) }}
+        url: ${{ format('https://api.github.com/repos/{0}/{1}/actions/runs/{2}', 'ApolloEnglishVN', 'APL.ATS.Portal.Api', steps.build_deploy_DEV.outputs.run-id) }}
         method: 'GET'
         customHeaders: |
           {
