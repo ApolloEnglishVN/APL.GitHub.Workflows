@@ -15,8 +15,7 @@ jobs:
     environment: DEVELOPMENT
     runs-on: ubuntu-latest
     outputs:
-      run-id: ${{ steps.build_deploy_DEV.outputs.run-id }}
-      run_number: ${{ steps.build_deploy_DEV.outputs.run_number }}
+      run_number: ${{ steps.query_run_number.outputs.build-number }}
     steps:
     - name: "Build & Deploy / DEV"
       id: build_deploy_DEV
@@ -28,8 +27,12 @@ jobs:
         workflow-name: ats_portalapi_deploy_DEV_cicd.yml
         ref: 'feature/workflow_triggered_from_other_repo'
         fail-on-error: true
-    - name: Dump outputs of Deploy_DEV
-      run: echo '${{ toJSON(steps.build_deploy_DEV.outputs) }}'
+    - name: Query run number of build_deploy_DEV
+      id: query_run_number
+      uses: mlilback/build-number@v1
+      with:
+        base: 100
+        run-id: steps.build_deploy_DEV.outputs.run-id
         
   Deploy_QC:
     name: "Deploy / QC"
@@ -47,6 +50,5 @@ jobs:
         fail-on-error: true
         payload: |
           {
-            "run_number": "${{ needs.Deploy_DEV.outputs }}"
+            "run_number": "${{ needs.Deploy_DEV.outputs.run_number }}"
           }
-        
