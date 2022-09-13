@@ -58,16 +58,28 @@ jobs:
     environment: PROD
     runs-on: ubuntu-latest
     steps:
-    - uses: mathze/workflow-dispatch-action@v1.1.0
+#    - uses: mathze/workflow-dispatch-action@v1.1.0
+#      with:
+#        owner: ${{ env.OWNER }}
+#        repo: ${{ env.REPO }}
+#        token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
+#        workflow-name: ats_portal_api_deploy_PROD_cicd.yml
+#        ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production'
+#        fail-on-error: true
+#        run-id: dummy
+#        payload: |
+#          {
+#            "run_number": "${{ github.event.inputs.run_number }}"
+#          }
+    - uses:  actions/github-script@v6
+      id: create_PROD_deployment
       with:
-        owner: ${{ env.OWNER }}
-        repo: ${{ env.REPO }}
-        token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
-        workflow-name: ats_portal_api_deploy_PROD_cicd.yml
-        ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production'
-        fail-on-error: true
-        run-id: dummy
-        payload: |
-          {
-            "run_number": "${{ github.event.inputs.run_number }}"
-          }
+        script: |
+          github.rest.actions.createWorkflowDispatch({
+            owner: ${{ env.OWNER }},
+            repo: ${{ env.REPO }},
+            workflow_id: 'ats_portal_api_deploy_PROD_cicd.yml',
+            ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production',
+          })
+    - name: Get result
+      run: echo "${{steps.create_PROD_deployment.outputs.result}}"
