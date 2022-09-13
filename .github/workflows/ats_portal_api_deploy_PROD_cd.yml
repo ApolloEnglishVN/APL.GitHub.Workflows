@@ -64,6 +64,7 @@ jobs:
         repo: ${{ env.REPO }}
         token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow-name: ats_portal_api_deploy_PROD_cicd.yml
+        ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production'
         fail-on-error: true
         run-id: dummy
         payload: |
