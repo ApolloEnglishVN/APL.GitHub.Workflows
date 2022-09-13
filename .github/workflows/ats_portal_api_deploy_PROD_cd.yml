@@ -75,7 +75,7 @@ jobs:
       with:
         script: |
           github.rest.actions.createWorkflowDispatch({
-            owner: ${{ context.repo.owner }},
+            owner: context.repo.owner,
             repo: ${{ env.REPO }},
             github-token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }},
             workflow_id: 'ats_portal_api_deploy_PROD_cicd.yml',
