@@ -11,7 +11,6 @@ on:
         description: 'Run number of Build & Dev CICD'
 
 env:
-  OWNER: ApolloEnglishVN
   REPO: APL.ATS.Portal.Api
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -76,7 +75,7 @@ jobs:
       with:
         script: |
           github.rest.actions.createWorkflowDispatch({
-            owner: ${{ env.OWNER }},
+            owner: ${{ github.repository_owner }},
             repo: ${{ env.REPO }},
             workflow_id: 'ats_portal_api_deploy_PROD_cicd.yml',
             ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production',
