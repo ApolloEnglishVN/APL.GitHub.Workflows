@@ -81,8 +81,8 @@ jobs:
             owner: context.repo.owner,
             repo: '${{ env.REPO }}',
             workflow_id: '${{ env.PROD_CICD }}',
-            ref: 'master',
+            ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production',
             inputs: { 'run_number': '${{ github.event.inputs.run_number }}' }
           })
     - name: Get result
-      run: echo "${{steps.create_PROD_deployment.outputs.result}}"
+      run: echo "${{ steps.create_PROD_deployment.outputs.result }}"
