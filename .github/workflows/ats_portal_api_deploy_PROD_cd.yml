@@ -78,8 +78,8 @@ jobs:
           github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
             repo: '${{ env.REPO }}',
-            workflow_id: 'ats_portal_api_deploy_PROD_cicd.yml',
-            ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production',
+            workflow_id: 'ats_portalapi_deploy_DEV_cicd.yml',
+            ref: 'master',
           })
     - name: Get result
       run: echo "${{steps.create_PROD_deployment.outputs.result}}"
