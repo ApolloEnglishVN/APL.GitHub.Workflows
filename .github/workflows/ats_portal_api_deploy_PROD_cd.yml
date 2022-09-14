@@ -16,7 +16,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-#  Deploy_DEV:
+#  Deploy_DEV:master
 #    name: "Deploy / DEV"
 #    environment: DEVELOPMENT
 #    runs-on: ubuntu-latest
@@ -78,8 +78,8 @@ jobs:
           github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
             repo: '${{ env.REPO }}',
-            workflow_id: 'ats_portalapi_deploy_DEV_cicd.yml',
-            ref: 'master',
+            workflow_id: 'ats_portal_api_deploy_PROD_cicd.yml',
+            ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production',
           })
     - name: Get result
       run: echo "${{steps.create_PROD_deployment.outputs.result}}"
