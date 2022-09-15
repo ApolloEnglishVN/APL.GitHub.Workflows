@@ -52,37 +52,24 @@ jobs:
 #            "accept": "application/vnd.github+json",
 #            "Authorization": "${{ format('token {0}', secrets.G_PERSONAL_ACCESS_TOKEN) }}"
 #          }
-
   Deploy_PROD:
     name: "Deploy / PROD"
     environment: PROD
     runs-on: ubuntu-latest
     steps:
-#    - uses: mathze/workflow-dispatch-action@v1.1.0
-#      with:
-#        owner: ${{ env.OWNER }}
-#        repo: ${{ env.REPO }}
-#        token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
-#        workflow-name: ats_portal_api_deploy_PROD_cicd.yml
-#        ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production'
-#        fail-on-error: true
-#        run-id: dummy
-#        payload: |
-#          {
-#            "run_number": "${{ github.event.inputs.run_number }}"
-#          }
-    - uses:  actions/github-script@v6
-      id: create_PROD_deployment
+    - name: Trigger PROD deployment
+      id: triggered_PROD
+      uses: convictional/trigger-workflow-and-wait@v1 
       with:
-        github-token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
-        debug: true
-        script: |
-          github.rest.actions.createWorkflowDispatch({
-            owner: context.repo.owner,
-            repo: '${{ env.REPO }}',
-            workflow_id: '${{ env.PROD_CICD }}',
-            ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production',
-            inputs: { 'run_number': '${{ github.event.inputs.run_number }}' }
-          })
+        owner: context.repo.owner
+        repo: ${{ env.REPO }}
+        github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
+        workflow_file_name: ${{ env.PROD_CICD }}
+        github_user: ${{ github.actor }}
+        ref: 'feature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production'
+        client_payload: |
+          {
+            "run_number": "${{ github.event.inputs.run_number }}"
+          }
     - name: Get result
-      run: echo "${{ steps.create_PROD_deployment.outputs.result }}"
+      run: echo "${{ steps.triggered_PROD.outputs.result }}"
