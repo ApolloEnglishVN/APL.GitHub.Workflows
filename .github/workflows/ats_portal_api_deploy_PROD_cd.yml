@@ -31,10 +31,7 @@ jobs:
             repo: ${{ env.REPO }},
             workflow_id: 'ats_portal_api_deploy_PROD_cicd.yml',
             ref: 'main',
-            inputs: |
-              {
-                "run_number": "${{ github.event.inputs.run_number }}"
-              }
+            inputs: {"run_number": "${{ github.event.inputs.run_number }}"}
           })
       
     - name: PROD deployment
