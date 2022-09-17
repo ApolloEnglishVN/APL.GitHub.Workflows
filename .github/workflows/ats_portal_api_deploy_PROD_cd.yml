@@ -24,14 +24,15 @@ jobs:
     - name: PROD deployment by Github Script
       uses: actions/github-script@v6.2.0
       with:
-        # The script to run
+        github-token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
+        debug: true
         script: |
           github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
             repo: '${{ env.REPO }}'
-            workflow_id: 'ats_portal_api_deploy_PROD_cicd.yml',
+            workflow_id: '${{ env.PROD_CICD }}',
             ref: 'main',
-            inputs: {"run_number": "${{ github.event.inputs.run_number }}"}
+            inputs: { 'run_number': '${{ github.event.inputs.run_number }}' }
           })
       
     - name: PROD deployment
