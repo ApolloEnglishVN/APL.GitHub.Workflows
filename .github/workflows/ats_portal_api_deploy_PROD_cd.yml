@@ -66,7 +66,6 @@ jobs:
         github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow_file_name: ${{ env.PROD_CICD }}
         github_user: ${{ github.actor }}
-        ref: main
         client_payload: |
           {
             "run_number": "${{ github.event.inputs.run_number }}"
