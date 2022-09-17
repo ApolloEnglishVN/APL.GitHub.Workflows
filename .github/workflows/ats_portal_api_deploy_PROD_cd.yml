@@ -55,9 +55,9 @@ jobs:
   Deploy_PROD:
     name: "Deploy / PROD"
     environment: PROD
-    runs-on: ubuntu-latestfeature/DEVOPS-17-implement-cicd-for-ats-portal-api-to-production
+    runs-on: ubuntu-latest
     steps:
-    - name: Trigger PROD deployment
+    - name: PROD deployment
       id: triggered_PROD
       uses: convictional/trigger-workflow-and-wait@v1.6.1
       with:
@@ -66,7 +66,7 @@ jobs:
         github_token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
         workflow_file_name: ${{ env.PROD_CICD }}
         github_user: ${{ github.actor }}
-        ref: main
+        ref: master
         client_payload: |
           {
             "run_number": "${{ github.event.inputs.run_number }}"
