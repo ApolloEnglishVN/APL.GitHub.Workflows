@@ -59,7 +59,7 @@ jobs:
     steps:
     - name: PROD deployment
       id: triggered_PROD
-      uses: convictional/trigger-workflow-and-wait@v1.6.1
+      uses: convictional/trigger-workflow-and-wait@v1.6.3
       with:
         owner: context.repo.owner
         repo: ${{ env.REPO }}
