@@ -22,13 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: PROD deployment by Github Script
-      uses: benc-uk/workflow-dispatch@v1.1
+      uses: actions/github-script@v6.3.3
       with:
-        token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
-        repo: '${{ env.REPO }}'
-        workflow: '${{ env.PROD_CICD }}'
-        ref: 'main'
-        inputs: '{ "run_number": "${{ github.event.inputs.run_number }}" }'
+        github-token: ${{ secrets.G_PERSONAL_ACCESS_TOKEN }}
+        debug: true
+        script: |
+          github.rest.actions.createWorkflowDispatch({
+            owner: context.repo.owner,
+            repo: '${{ env.REPO }}',
+            workflow_id: '${{ env.PROD_CICD }}',
+            ref: 'main',
+            inputs: { 'run_number': '${{ github.event.inputs.run_number }}' }
+          })
       
     - name: PROD deployment
       id: triggered_PROD
